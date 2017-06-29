@@ -29,6 +29,6 @@ class(calls$user)
 #Attempts to plot precences
 View(presences)
 ggplot(presences, aes(x = name)) + geom_bar() 
-ggplot(presences, aes(x = name)) + geom_bar(aes(y = ..count..), stat = "count")
+
 
 
