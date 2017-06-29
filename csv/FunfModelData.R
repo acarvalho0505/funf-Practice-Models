@@ -1,9 +1,9 @@
 library(readr)
 library(dplyr)
 library(ggplot2)
-calls <- read_csv("~/Downloads/csv/calls.csv")cl
-messages <- read_csv("~/Downloads/csv/messages.csv")
-presences <- read_csv("~/Downloads/csv/presences.csv")
+calls <- read_csv("~/Desktop/funf-Practice-Models/csv/calls.csv")
+messages <- read_csv("~/Desktop/funf-Practice-Models/csv/messages.csv")
+presences <- read_csv("~/Desktop/funf-Practice-Models/csv/presences.csv")
 
 #playing with calls
 calls_incoming = calls[calls$direction == "Incoming", c("user", "duration")]
@@ -31,5 +31,4 @@ View(presences)
 ggplot(presences, aes(x = name)) + geom_bar() 
 ggplot(presences, aes(x = name)) + geom_bar(aes(y = ..count..), stat = "count")
 
-rm.outlier(x, fill = FALSE, median = FALSE, opposite = FALSE)
 
