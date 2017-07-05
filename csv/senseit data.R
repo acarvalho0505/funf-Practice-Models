@@ -1,12 +1,18 @@
-sep<- split(senseit_3_5, f=senseit_3_5[,"col1"])
-orientation=split$'0'
+library(readr)
+senseit_3_5 <- read_csv("senseit_3_5.csv")
+sep<- split(senseit_3_5, f=senseit_3_5[, "Sensor"])
+orientation=sep$`0`
 location=sep$`1`
 accelometer=sep$`2`
 light=sep$`3`
 sound=sep$`4`
 
-fd1<- location %>% filter(col3>-33.911994 & col4>18.418049)
-foundry_data.frame<- filter(fd1, col3> -33.912778 & col4<18.419229)
+location$Z = NULL
+colnames(location)[2] = "latitude" #add column names
+colnames(location)[3] = "longitude"
+
+fd1<- location %>% filter(latitude>-33.911994 & longitude>18.418049)
+foundry_data.frame<- filter(fd1, latitude> -33.912778 & longitude<18.419229)
 foundry_data.frame
 
 rowcheck  <- function(foundry_data.frame, location){
