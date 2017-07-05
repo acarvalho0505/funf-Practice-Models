@@ -1,5 +1,6 @@
 library(readr)
 library(ggplot2)
+library(RColorBrewer)
 senseit_3_5 <- read_csv("senseit_3_5.csv")
 sep<- split(senseit_3_5, f=senseit_3_5[, "Sensor"])
 orientation=sep$`0`
@@ -29,11 +30,17 @@ location = cbind(location, match)
 colnames(location)[4] = "area"
 location = location %>% mutate(area = ifelse(area == TRUE, "Foundry", "NA"))
 
+#add a column for the seconds
+location$seconds = 0
+for(i in 1:nrow(location)){ 
+  location$seconds[i] = i
+}
+
 ggplot(location, aes(x = latitude, y = longitude, color = area)) + geom_point(alpha = 0.5)
 ggplot(location, aes(x = area, fill = area)) + geom_bar() #we can visualize how much time a person spends at a 
 
 #using Google Map API
 library(ggmap)
 cape_town = get_map(location = c(18.37,-33.92,18.470,-33.905), maptype = "roadmap")
-ggmap(cape_town) + geom_point(aes(x = longitude, y = latitude, color = area), data = location, size = 1)
-
+foundry_map = ggmap(cape_town) + geom_point(aes(x = longitude, y = latitude, color = area), data = location, size = .5)
+time_map = ggmap(cape_town) + geom_point(aes(x = longitude, y = latitude, color = seconds), data = location, size = .5)
