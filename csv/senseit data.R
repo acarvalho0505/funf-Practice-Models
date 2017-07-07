@@ -1,6 +1,7 @@
 library(readr)
 library(ggplot2)
 library(RColorBrewer)
+library(dplyr)
 senseit_3_5 <- read_csv("senseit_3_5.csv") #load senseit csv file into a dataframe
 sep<- split(senseit_3_5, f=senseit_3_5[, "Sensor"]) #split the data frame by sensor type
 #renaming the sensor tables
@@ -16,7 +17,7 @@ colnames(location)[2] = "latitude" #add column names
 colnames(location)[3] = "longitude"
 
 #filter out the rows where the location is within the longitude and the latitude of the foundry
-fd1<- location %>% filter(latitude<-33.911994 & longitude>18.418049)
+fd1<- location %>% filter(latitude< -33.911994 & longitude>18.418049)
 foundry_data.frame<- filter(fd1, latitude> -33.912778 & longitude<18.419229)
 foundry_data.frame
 
@@ -32,6 +33,7 @@ match<- rowcheck(location, foundry_data.frame) #creates a logical ath sees wheth
 match = as.data.frame(match) #makes the match into a dataframe
 location = cbind(location, match) #cbinds the location data with the match data
 colnames(location)[4] = "area" #rename the 4th column
+library(dplyr)
 location = location %>% mutate(area = ifelse(area == TRUE, "Foundry", "NA")) #changes TRUE to Foundry, and FALSE to NA
 
 #add a column for the seconds
